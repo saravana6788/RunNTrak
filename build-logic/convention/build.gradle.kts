@@ -22,5 +22,12 @@ gradlePlugin{
             id= "runntrak.android.application"
             implementationClass = "com.skcodes.convention.AndroidApplicationConventionPlugin"
         }
+
+        register(
+            "androidComposeApplication"
+        ){
+            id = "runntrak.android.application.compose"
+            implementationClass = "com.skcodes.convention.AndroidApplicationComposePlugin"
+        }
     }
 }
