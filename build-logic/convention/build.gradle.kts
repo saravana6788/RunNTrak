@@ -29,5 +29,49 @@ gradlePlugin{
             id = "runntrak.android.application.compose"
             implementationClass = "com.skcodes.convention.AndroidApplicationComposePlugin"
         }
+
+        register(
+            "androidLibraryApplication"
+        ){
+            id = "runntrak.android.library"
+            implementationClass = "com.skcodes.convention.AndroidLibraryConventionPlugin"
+        }
+
+        register(
+            "androidLibraryComposeApplication"
+        ){
+            id = "runntrak.android.library.compose"
+            implementationClass = "com.skcodes.convention.AndroidLibraryComposeConventionPlugin"
+        }
+
+        register(
+            "androidFeatureUi"
+        ){
+            id = "runntrak.android.feature.ui"
+            implementationClass = "com.skcodes.convention.AndroidFeatureUiCoventionPlugin"
+        }
+
+        register(
+            "androidRoom"
+        ){
+            id = "runntrak.android.room"
+            implementationClass = "com.skcodes.convention.AndroidRoomConventionPlugin"
+        }
+
+        register(
+            "androidJvm"
+        ){
+            id = "runntrak.android.jvm"
+            implementationClass = "com.skcodes.convention.JvmLibraryConventionPlugin"
+        }
+
+        register(
+            "androidJvmKtor"
+        ){
+            id = "runntrak.android.jvm.ktor"
+            implementationClass = "com.skcodes.convention.JvmKtorConventionPlugin"
+        }
+
+
     }
 }
