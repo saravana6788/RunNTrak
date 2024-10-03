@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_disk_full">Oops, Your Disk is Full</string>
+    <string name="error_request_timeout">The Request took too much time to process</string>
+    <string name="error_serialization">Oops! Couldn\'t parse data</string>
+    <string name="error_server_error">Oops! Something went wrong. Please try again.</string>
+    <string name="error_payload_too_large">The file you are trying to upload is too large.</string>
+    <string name="error_no_internet">Unable to connect to the network</string>
+    <string name="error_too_may_requests">You hit your rate limit</string>
+    <string name="unknown_error">Unknown Error</string>
+</resources>
