@@ -21,6 +21,7 @@ dependencyResolutionManagement {
     }
 }
 
+ gradle.startParameter.excludedTaskNames.addAll(listOf(":build-logic:convention:testClasses"))
 rootProject.name = "RunNTrak"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
