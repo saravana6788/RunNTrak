@@ -127,18 +127,19 @@ runntrak-android-room = { id = "runntrak.android.room", version = "unspecified"}
 runntrak-android-jvm = { id = "runntrak.android.jvm", version = "unspecified"}
 runntrak-android-jvm-ktor = { id = "runntrak.android.jvm.ktor", version = "unspecified"}
 [bundles]
+compose = ["androidx-activity-compose",
+    "androidx-lifecycle-runtime-compose",
+    "androidx-lifecycle-viewmodel-compose",
+    "androidx-compose-material3",
+    "androidx-compose-ui",
+    "androidx-compose-ui-graphics",
+    "androidx-compose-ui-tooling-preview"]
+compose-debug = ["androidx-compose-ui-tooling",
+    "androidx-compose-ui-test-manifest"
+]
 koin = ["koin-core","koin-android","koin-android-workmanager"]
 koin-compose = ["koin-core","koin-android","koin-android-workmanager","koin-androidx-compose"]
-compose = ["androidx-activity-compose",
-"androidx-lifecycle-runtime-compose",
-"androidx-lifecycle-viewmodel-compose",
-"androidx-compose-material3",
-"androidx-compose-ui",
-"androidx-compose-ui-graphics",
-"androidx-compose-ui-tooling-preview"]
-compose-debug = ["androidx-compose-ui-tooling",
-"androidx-compose-ui-test-manifest"
-]
+
 
 ktor = ["ktor-client-auth",
 "ktor-client-cio",

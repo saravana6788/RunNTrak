@@ -53,6 +53,8 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
+    implementation(libs.bundles.koin)
+
     // Location
     implementation(libs.google.android.gms.play.services.location)
 
