@@ -5,4 +5,18 @@
     <string name="sign_up">Sign Up</string>
     <string name="runntrak_welcome_description">Track you runs, set goals and achieve fitness milestones with out intuitive app</string>
     <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_have_account">Already have an Account</string>
+    <string name="login">Login</string>
+    <string name="enter_a_vaid_email">Must be a valid email</string>
+    <string name="email">Email</string>
+    <string name="email_hint">example@test.com</string>
+    <string name="password">Password</string>
+    <string name="atleast_min_characters">Atleast %d characters</string>
+    <string name="contains_numbers">Atleast one number</string>
+    <string name="contains_lower_case_alphabets">Contains lowercase character</string>
+    <string name="contains_upper_case_alphabets">Contains uppercase character</string>
+    <string name="register">Register</string>
+    <string name="email_already_exists">User with same email already exists.</string>
+    <string name="registration_successful">Registration Successful! You can login now.</string>
 </resources>

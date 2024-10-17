@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="sign_up">Sign Up\n</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="email">Email</string>
+    <string name="enter_a_vaid_email">Enter a valid email</string>
+    <string name="show_password">Show Password</string>
+    <string name="hide_password">Hide Password</string>
 </resources>
