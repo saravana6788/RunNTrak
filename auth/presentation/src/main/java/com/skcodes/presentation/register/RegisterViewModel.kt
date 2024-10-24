@@ -46,7 +46,7 @@ class RegisterViewModel(private val userDataValidator: UserDataValidator,
         }.launchIn(viewModelScope)
     }
 
-    fun onAction(action: RegisterAction){
+    fun  onAction(action: RegisterAction){
         when(action){
             RegisterAction.OnRegisterClickAction -> register()
             RegisterAction.OnTogglePasswordVisibilityClick -> state = state.copy(

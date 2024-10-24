@@ -9,15 +9,18 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.skcodes.presentation.intro.IntroScreenRoot
+import com.skcodes.presentation.login.LoginScreenRoot
 import com.skcodes.presentation.register.RegisterScreenRoot
 
 @Composable
 fun NavigationRoot(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    isLoggedIn:Boolean
 ){
     NavHost(navController = navHostController,
-        startDestination = "auth"){
+        startDestination = if(isLoggedIn) "run" else "auth"){
             authNavGraph(navHostController)
+            runNavGraph(navHostController)
     }
 }
 
@@ -48,8 +51,36 @@ private fun NavGraphBuilder.authNavGraph(navHostController: NavHostController){
                 } },
                 onRegistrationSuccessful = { navHostController.navigate("login") })
         }
-        composable("login") {
-            Text(text = "Login Page")
+        composable(route = "login") {
+            LoginScreenRoot(onLoginSuccess = {
+                navHostController.navigate(route = "run"){
+                    popUpTo("auth"){
+                        inclusive = true
+                    }
+                }
+            }, onSignUpClick = {
+                navHostController.navigate(route = "register"){
+                    popUpTo("login"){
+                        inclusive = true
+                        saveState = true
+                    }
+                    restoreState = true
+                }
+            })
+        }
+
+
+    }
+}
+
+
+private fun NavGraphBuilder.runNavGraph(navHostController: NavHostController){
+    navigation(
+        startDestination = "run_overview",
+        route = "run"
+    ){
+        composable(route="run_overview"){
+            Text(text = "In Run screen")
         }
     }
 }
