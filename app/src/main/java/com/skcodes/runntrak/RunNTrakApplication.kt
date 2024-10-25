@@ -4,6 +4,7 @@ import android.app.Application
 import com.skcodes.auth.data.di.authDataModule
 import com.skcodes.core.data.di.coreDataModule
 import com.skcodes.presentation.di.authViewModelModule
+import com.skcodes.run.presentation.di.runViewModelModule
 import com.skcodes.runntrak.di.appModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -24,7 +25,8 @@ class RunNTrakApplication:Application() {
                 authDataModule,
                 authViewModelModule,
                 appModule,
-                coreDataModule
+                coreDataModule,
+                runViewModelModule
             )
         }
 
