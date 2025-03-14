@@ -5,4 +5,7 @@
     <string name="enter_a_vaid_email">Enter a valid email</string>
     <string name="show_password">Show Password</string>
     <string name="hide_password">Hide Password</string>
+    <string name="runntrak">RunNTrak</string>
+    <string name="go_back">Go Back</string>
+    <string name="open_menu">Open Menu</string>
 </resources>

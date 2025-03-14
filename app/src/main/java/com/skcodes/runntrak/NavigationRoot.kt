@@ -11,6 +11,8 @@ import androidx.navigation.compose.navigation
 import com.skcodes.presentation.intro.IntroScreenRoot
 import com.skcodes.presentation.login.LoginScreenRoot
 import com.skcodes.presentation.register.RegisterScreenRoot
+import com.skcodes.run.presentation.active_run.ActiveRunScreenRoot
+import com.skcodes.run.presentation.run_overview.RunOverviewScreenRoot
 
 @Composable
 fun NavigationRoot(
@@ -80,7 +82,22 @@ private fun NavGraphBuilder.runNavGraph(navHostController: NavHostController){
         route = "run"
     ){
         composable(route="run_overview"){
-            Text(text = "In Run screen")
+            RunOverviewScreenRoot(
+                onStartClick = {
+                    navHostController.navigate(route = "active_run") {
+                        popUpTo("run_overview"){
+                            inclusive = false
+                            saveState = true
+                        }
+                        restoreState = true
+
+                    }
+                }
+            )
+        }
+
+        composable(route= "active_run"){
+            ActiveRunScreenRoot()
         }
     }
 }

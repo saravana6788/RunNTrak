@@ -90,7 +90,7 @@ fun RunNTrakActionButtonPreview(){
 
 @Composable
 fun RunNTrakOutlinedActionButton(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     text:String,
     enabled:Boolean = true,
     isLoading:Boolean,
