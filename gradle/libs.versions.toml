@@ -38,9 +38,10 @@ kotlinx-serialization = "1.6.3"
 secretsPlugin = "2.0.1"
 playServicesMaps = "18.2.0"
 annotation = "1.7.1"
+mapsSecrets = "2.0.1"
 
 # Project versions
-projectApplicationId = "com.plcoding.runique"
+projectApplicationId = "com.skcodes.runntrak"
 projectVersionName = "1.0"
 projectMinSdkVersion = "25"
 projectTargetSdkVersion = "34"
@@ -126,6 +127,7 @@ runntrak-android-feature-ui = { id = "runntrak.android.feature.ui", version = "u
 runntrak-android-room = { id = "runntrak.android.room", version = "unspecified"}
 runntrak-android-jvm = { id = "runntrak.android.jvm", version = "unspecified"}
 runntrak-android-jvm-ktor = { id = "runntrak.android.jvm.ktor", version = "unspecified"}
+
 [bundles]
 compose = ["androidx-activity-compose",
     "androidx-lifecycle-runtime-compose",

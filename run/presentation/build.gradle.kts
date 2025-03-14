@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.runntrak.android.feature.ui)
+    alias(libs.plugins.mapsplatform.secrets.plugin)
 }
 
 android {
@@ -14,4 +15,11 @@ dependencies {
     implementation(libs.timber)
     implementation(projects.run.domain)
     implementation(projects.core.domain)
+    implementation(libs.play.services.maps)
+
+}
+
+secrets{
+    propertiesFileName = "secrets.properties"
+    defaultPropertiesFileName = "local.defaults.properties"
 }

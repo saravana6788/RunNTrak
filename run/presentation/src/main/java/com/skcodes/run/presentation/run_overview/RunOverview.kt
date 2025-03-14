@@ -1,5 +1,9 @@
 package com.skcodes.run.presentation.run_overview
 
+import android.Manifest
+import android.os.Build
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -25,13 +29,23 @@ import com.skcodes.presentation.designsystem.components.util.DropDownItem
 import com.skcodes.run.presentation.R
 import org.koin.androidx.compose.koinViewModel
 
+
 @Composable
 fun RunOverviewScreenRoot(
+    onStartClick:() ->Unit,
     viewModel: RunOverviewViewModel = koinViewModel()
 ){
 
     RunOverviewScreen(
-        onAction = viewModel::onAction
+        onAction = { action ->
+
+            when(action){
+                RunOverviewAction.OnStartRunClick -> onStartClick()
+                RunOverviewAction.OnAnalyticsClick -> TODO()
+                RunOverviewAction.OnLogOutClick -> TODO()
+            }
+            viewModel.onAction(action)
+        }
     )
 
 }
@@ -41,7 +55,6 @@ fun RunOverviewScreenRoot(
 fun RunOverviewScreen(
     onAction:(RunOverviewAction)->Unit
 ){
-
     val topAppBarState  = rememberTopAppBarState()
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(
         state = topAppBarState

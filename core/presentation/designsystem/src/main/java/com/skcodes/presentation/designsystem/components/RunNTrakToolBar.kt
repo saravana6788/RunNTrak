@@ -52,7 +52,7 @@ fun RunNTrakToolBar(
     menuItems:List<DropDownItem> = emptyList(),
     onMenuItemClick:(Int) -> Unit = {},
     scrollBehavior:TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(),
-    startContent: @Composable () -> Unit
+    startContent: @Composable (() -> Unit)? = null
     ) {
 
     var isDropDownOpen by rememberSaveable {

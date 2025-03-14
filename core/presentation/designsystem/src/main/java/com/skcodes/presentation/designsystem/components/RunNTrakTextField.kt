@@ -101,7 +101,6 @@ fun RunNTrakTextField(
                     ) else
                         MaterialTheme.colorScheme.surface
                 )
-
                 .border(
                     width = 1.dp,
                     color = if (isFocused) MaterialTheme.colorScheme.primary else Color.Transparent,

@@ -15,4 +15,5 @@ dependencies {
     implementation(libs.google.android.gms.play.services.location)
     implementation(projects.core.domain)
     implementation(projects.run.domain)
+    implementation(libs.bundles.koin)
 }
