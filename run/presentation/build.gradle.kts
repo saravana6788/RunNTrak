@@ -15,6 +15,7 @@ dependencies {
     implementation(libs.timber)
     implementation(projects.run.domain)
     implementation(projects.core.domain)
+    implementation(projects.core.presentation.ui)
     implementation(libs.play.services.maps)
 
 }
