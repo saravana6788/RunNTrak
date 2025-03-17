@@ -22,7 +22,13 @@ fun Duration.formatted():String{
 fun Double.toFormattedKm():String{
     return "${this.roundToDecimals(1)} km"
 }
+fun Double.toFormattedKmh():String{
+    return "${this.roundToDecimals(1)} km/h"
+}
 
+fun Int.toFormattedMeters():String{
+    return "$this km/h"
+}
 @SuppressLint("DefaultLocale")
 fun Duration.toFormattedPace(distanceinKm:Double):String{
     if(this == Duration.ZERO || distanceinKm <= 0.0){

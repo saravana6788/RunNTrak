@@ -2,16 +2,19 @@ package com.skcodes.runntrak
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.SemanticsProperties.Text
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
+import androidx.navigation.navDeepLink
 import com.skcodes.presentation.intro.IntroScreenRoot
 import com.skcodes.presentation.login.LoginScreenRoot
 import com.skcodes.presentation.register.RegisterScreenRoot
 import com.skcodes.run.presentation.active_run.ActiveRunScreenRoot
+import com.skcodes.run.presentation.active_run.service.ActiveRunService
 import com.skcodes.run.presentation.run_overview.RunOverviewScreenRoot
 
 @Composable
@@ -96,8 +99,33 @@ private fun NavGraphBuilder.runNavGraph(navHostController: NavHostController){
             )
         }
 
-        composable(route= "active_run"){
-            ActiveRunScreenRoot()
+        composable(
+            route= "active_run",
+            deepLinks = listOf(navDeepLink {
+                uriPattern = "runntrak://active_run"
+            })
+        ){
+            val context = LocalContext.current
+            ActiveRunScreenRoot(
+                serviceToggle = {
+                    if(it){
+                        context.startService(
+                            ActiveRunService.createStartServiceCommand(
+                                context = context,
+                                MainActivity::class.java
+                            )
+                        )
+
+                    }else{
+                        context.startService(
+                            ActiveRunService.createStopServiceCommand(
+                                context = context
+                            )
+                        )
+
+                    }
+                }
+            )
         }
     }
 }

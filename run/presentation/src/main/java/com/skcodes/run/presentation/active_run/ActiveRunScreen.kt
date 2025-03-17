@@ -24,12 +24,14 @@ import androidx.compose.ui.unit.dp
 import com.skcodes.presentation.designsystem.RunNTrakTheme
 import com.skcodes.presentation.designsystem.StartIcon
 import com.skcodes.presentation.designsystem.StopIcon
+import com.skcodes.presentation.designsystem.components.RunNTrakActionButton
 import com.skcodes.presentation.designsystem.components.RunNTrakDialog
 import com.skcodes.presentation.designsystem.components.RunNTrakFloatingActionButton
 import com.skcodes.presentation.designsystem.components.RunNTrakOutlinedActionButton
 import com.skcodes.presentation.designsystem.components.RunNTrakScaffold
 import com.skcodes.presentation.designsystem.components.RunNTrakToolBar
 import com.skcodes.run.presentation.R
+import com.skcodes.run.presentation.active_run.service.ActiveRunService
 import com.skcodes.run.presentation.components.RunDataCard
 import com.skcodes.run.presentation.maps.TrackerMap
 import com.skcodes.run.presentation.util.hasLocationPermissions
@@ -41,12 +43,14 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ActiveRunScreenRoot(
+    serviceToggle: (Boolean) -> Unit,
     viewModel:ActiveRunViewModel = koinViewModel()
 ){
 
     ActiveRunScreen(
         state = viewModel.state,
-        onAction = viewModel::onAction
+        onAction = viewModel::onAction,
+        serviceToggle = serviceToggle
     )
 
 }
@@ -56,6 +60,7 @@ fun ActiveRunScreenRoot(
 @Composable
 fun ActiveRunScreen(
     state:ActiveRunState,
+    serviceToggle:(Boolean)->Unit,
     onAction: (ActiveRunAction) ->Unit
 ){
 
@@ -102,6 +107,18 @@ fun ActiveRunScreen(
 
         if(!showLocationRationale && !showNotificationRationale){
             permissionLauncher.requestRunNTrakPermissions(context)
+        }
+    }
+
+    LaunchedEffect(state.shouldTrack) {
+        if(state.shouldTrack && context.hasLocationPermissions() && !ActiveRunService.isServiceActive){
+            serviceToggle(true)
+        }
+    }
+
+    LaunchedEffect(state.isRunFinished) {
+        if(state.isRunFinished) {
+            serviceToggle(false)
         }
     }
 
@@ -155,6 +172,32 @@ fun ActiveRunScreen(
 
         }
 
+    }
+
+    if(!state.shouldTrack && state.hasStartedRunning){
+        RunNTrakDialog(
+            title = stringResource(R.string.run_is_paused),
+            description = stringResource(R.string.resume_or_finish_run),
+            primaryButton = {
+                RunNTrakActionButton(
+                    text = stringResource(R.string.resume),
+                    onClick = { onAction(ActiveRunAction.OnResumeClick) },
+                    isLoading = false,
+                    modifier = Modifier.weight(1f),
+
+                )
+            },
+            secondaryButton = {
+                RunNTrakOutlinedActionButton(
+                    text = stringResource(R.string.finish),
+                    onClick = {onAction(ActiveRunAction.OnFinishClick)},
+                    isLoading = state.isSavingRun,
+                    modifier = Modifier.weight(1f)
+                )
+            },
+            onDismiss = {onAction(ActiveRunAction.OnResumeClick)}
+
+        )
     }
 
     if(state.showLocationRationale || state.showNotificationRationale){
@@ -220,7 +263,8 @@ fun ActiveRunScreenPreview(){
     RunNTrakTheme {
         ActiveRunScreen(
             state = ActiveRunState(),
-            onAction = {}
+            onAction = {},
+            serviceToggle = {}
         )
     }
 
