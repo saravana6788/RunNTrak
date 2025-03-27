@@ -1,4 +1,4 @@
-package com.skcodes.run.domain.run
+package com.skcodes.core.domain.run
 
 import com.skcodes.core.domain.Location
 

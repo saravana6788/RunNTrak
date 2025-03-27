@@ -6,6 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.skcodes.core.domain.Location
+import com.skcodes.core.domain.run.Run
+import com.skcodes.core.domain.run.RunRepository
+import com.skcodes.core.domain.util.Result
+import com.skcodes.presentation.ui.asUIText
+import com.skcodes.run.domain.LocationDataCalculator
 import com.skcodes.run.domain.RunningTracker
 import com.skcodes.run.presentation.active_run.service.ActiveRunService
 import kotlinx.coroutines.channels.Channel
@@ -16,9 +22,13 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
+import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class ActiveRunViewModel(
-    private val runningTracker: RunningTracker
+    private val runningTracker: RunningTracker,
+    private val runRepository: RunRepository
 ):ViewModel() {
 
     var state by  mutableStateOf(ActiveRunState(
@@ -46,10 +56,6 @@ class ActiveRunViewModel(
         SharingStarted.Lazily,
         false
     )
-
-
-
-
 
 
 
@@ -97,6 +103,10 @@ class ActiveRunViewModel(
                 )
             }
             ActiveRunAction.OnFinishClick -> {
+                state = state.copy(
+                    isRunFinished = true,
+                    isSavingRun = true
+                )
             }
             ActiveRunAction.OnResumeClick -> {
                 state = state.copy(
@@ -127,11 +137,50 @@ class ActiveRunViewModel(
                     showLocationRationale = false
                 )
             }
+
+            is ActiveRunAction.OnRunProcessed -> {
+                finishRun(action.mapPicInBytes)
+            }
         }
 
 
 
 
+    }
+
+    private fun finishRun(mapPicInBytes: ByteArray) {
+        val locations = state.runData.locations
+
+        if(locations.isEmpty() || locations.size <=1){
+            state = state.copy(isSavingRun = false)
+            return
+        }
+
+        viewModelScope.launch {
+            val run = Run(
+                id = null,
+                duration = state.elapsedTime,
+                distanceInMeters = state.runData.distanceInMeters,
+                location = state.currentLocation ?: Location(0.0, 0.0),
+                dataTimeInUTC = ZonedDateTime.now().withZoneSameInstant(ZoneId.of("UTC")),
+                maxSpeedInKmh = LocationDataCalculator.getMaxSpeedInKmh(locations),
+                totalElevationInMeters = LocationDataCalculator.getTotalElevationInMeters(locations),
+                mapPictureUrl = null
+            )
+
+            runningTracker.finishRun()
+            // Save Run in Repository
+            when(val result =  runRepository.upsertRun(run, mapPicInBytes)){
+                is Result.Error -> {
+                    eventChannel.send(ActiveRunEvent.Error(result.error.asUIText()))
+                }
+                is Result.Success -> {
+                   eventChannel.send(ActiveRunEvent.RunSaved)
+                }
+            }
+
+            state = state.copy(isSavingRun = false)
+        }
     }
 
     override fun onCleared() {

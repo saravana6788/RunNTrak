@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">RunNTrak</string>
+    <string name="title_analytics_feature">Analytics</string>
+    <string name="cound_not_install_analytics">Unable to install the analytics. Please try again later.</string>
+    <string name="install_failed">Analytics Feature installation failed. Please try again later.</string>
+    <string name="install_successful">Analytics Feature has been installed successfully.</string>
+    <string name="installing_module">Analytics Module is being installed.</string>
 </resources>

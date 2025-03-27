@@ -6,6 +6,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.semantics.SemanticsProperties.Text
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import androidx.navigation.Navigation
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
@@ -20,12 +21,15 @@ import com.skcodes.run.presentation.run_overview.RunOverviewScreenRoot
 @Composable
 fun NavigationRoot(
     navHostController: NavHostController,
-    isLoggedIn:Boolean
+    isLoggedIn:Boolean,
+    onAnalyticsClick: () -> Unit
 ){
     NavHost(navController = navHostController,
         startDestination = if(isLoggedIn) "run" else "auth"){
             authNavGraph(navHostController)
-            runNavGraph(navHostController)
+            runNavGraph(navHostController,
+                onAnalyticsClick
+                )
     }
 }
 
@@ -79,7 +83,8 @@ private fun NavGraphBuilder.authNavGraph(navHostController: NavHostController){
 }
 
 
-private fun NavGraphBuilder.runNavGraph(navHostController: NavHostController){
+private fun NavGraphBuilder.runNavGraph(navHostController: NavHostController,
+                                        onAnalyticsClick:() -> Unit){
     navigation(
         startDestination = "run_overview",
         route = "run"
@@ -88,14 +93,25 @@ private fun NavGraphBuilder.runNavGraph(navHostController: NavHostController){
             RunOverviewScreenRoot(
                 onStartClick = {
                     navHostController.navigate(route = "active_run") {
-                        popUpTo("run_overview"){
+                        popUpTo("run_overview") {
                             inclusive = false
                             saveState = true
                         }
                         restoreState = true
 
                     }
+                },
+                onLogOutClick = {
+                    navHostController.navigate("auth") {
+                        popUpTo("run") {
+                            inclusive = true
+                        }
+                    }
+                },
+                onAnalyticsClick = {
+                    onAnalyticsClick()
                 }
+
             )
         }
 
@@ -107,6 +123,8 @@ private fun NavGraphBuilder.runNavGraph(navHostController: NavHostController){
         ){
             val context = LocalContext.current
             ActiveRunScreenRoot(
+                onBack = { navHostController.navigateUp() },
+                onFinish = { navHostController.navigateUp() },
                 serviceToggle = {
                     if(it){
                         context.startService(

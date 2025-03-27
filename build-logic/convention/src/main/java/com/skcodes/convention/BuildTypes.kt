@@ -3,6 +3,7 @@ package com.skcodes.convention
 import com.android.build.api.dsl.ApplicationExtension
 import com.android.build.api.dsl.BuildType
 import com.android.build.api.dsl.CommonExtension
+import com.android.build.api.dsl.DynamicFeatureExtension
 import com.android.build.api.dsl.LibraryExtension
 import com.android.build.gradle.ProguardFiles.getDefaultProguardFile
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
@@ -10,44 +11,61 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
 internal fun Project.configureBuildTypes(
-    commonExtension: CommonExtension<*,*,*,*,*>,
+    commonExtension: CommonExtension<*, *, *, *, *>,
     extensionType: ExtensionType,
-){
-    commonExtension.run{
-        buildFeatures{
+) {
+    commonExtension.run {
+        buildFeatures {
             buildConfig = true
         }
         val api_key = gradleLocalProperties(rootDir).getProperty("api_key")
-                when(extensionType){
-                    ExtensionType.APPLICATION -> {
-                        extensions.configure<ApplicationExtension> {
-                            buildTypes {
-                                debug {
-                                    configureDebugBuildType(api_key)
-                                }
+        when (extensionType) {
+            ExtensionType.APPLICATION -> {
+                extensions.configure<ApplicationExtension> {
+                    buildTypes {
+                        debug {
+                            configureDebugBuildType(api_key)
+                        }
 
-                                release {
-                                    configureReleaseBuildType(api_key,commonExtension)
-                                }
-                            }
+                        release {
+                            configureReleaseBuildType(api_key, commonExtension)
                         }
                     }
-                    ExtensionType.LIBRARY -> {
-                        extensions.configure<LibraryExtension>{
-                            buildTypes {
-                                debug {
-                                    configureDebugBuildType(api_key)
-                                }
+                }
+            }
 
-                                release {
-                                    configureReleaseBuildType(api_key,commonExtension)
-                                }
-                            }
+            ExtensionType.LIBRARY -> {
+                extensions.configure<LibraryExtension> {
+                    buildTypes {
+                        debug {
+                            configureDebugBuildType(api_key)
+                        }
+
+                        release {
+                            configureReleaseBuildType(api_key, commonExtension)
+                        }
+                    }
+
+                }
+            }
+
+            ExtensionType.DYNAMIC_FEATURE -> {
+                extensions.configure<DynamicFeatureExtension> {
+                    buildTypes {
+                        debug {
+                            configureDebugBuildType(api_key)
+                        }
+
+                        release {
+                            configureReleaseBuildType(api_key, commonExtension)
+                            isMinifyEnabled = false
+                        }
+
 
                     }
+
                 }
-
-
+            }
         }
     }
 }
@@ -68,8 +86,10 @@ private fun BuildType.configureDebugBuildType(api_key: String) {
 }
 
 
-private fun BuildType.configureReleaseBuildType(api_key: String,
-                                                commonExtension: CommonExtension<*, *, *, *, *>) {
+private fun BuildType.configureReleaseBuildType(
+    api_key: String,
+    commonExtension: CommonExtension<*, *, *, *, *>
+) {
     buildConfigField(
         type = "String",
         name = "API_KEY",

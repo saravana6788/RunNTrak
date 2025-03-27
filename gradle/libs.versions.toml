@@ -125,6 +125,7 @@ runntrak-android-library-application = { id = "runntrak.android.library", versio
 runntrak-android-library-application-compose = { id = "runntrak.android.library.compose", version = "unspecified"}
 runntrak-android-feature-ui = { id = "runntrak.android.feature.ui", version = "unspecified"}
 runntrak-android-room = { id = "runntrak.android.room", version = "unspecified"}
+runntrak-android-dynamic-feature = {id = "runntrak.android.dynamic.feature", version = "unspecified"}
 runntrak-android-jvm = { id = "runntrak.android.jvm", version = "unspecified"}
 runntrak-android-jvm-ktor = { id = "runntrak.android.jvm.ktor", version = "unspecified"}
 

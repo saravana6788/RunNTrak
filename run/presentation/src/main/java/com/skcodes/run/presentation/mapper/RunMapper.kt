@@ -5,7 +5,7 @@ import com.skcodes.presentation.ui.toFormattedKm
 import com.skcodes.presentation.ui.toFormattedKmh
 import com.skcodes.presentation.ui.toFormattedMeters
 import com.skcodes.presentation.ui.toFormattedPace
-import com.skcodes.run.domain.run.Run
+import com.skcodes.core.domain.run.Run
 import com.skcodes.run.presentation.model.RunUi
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
