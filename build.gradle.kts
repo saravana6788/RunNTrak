@@ -8,4 +8,5 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.kotlin.serialization) apply false
     alias(libs.plugins.mapsplatform.secrets.plugin) apply false
+    alias(libs.plugins.androidDynamicFeature) apply false
 }

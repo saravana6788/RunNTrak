@@ -23,4 +23,9 @@ class MainViewModel(
             state = state.copy(isCheckingAuth = false)
         }
     }
+
+
+    fun toggleAnalyticsInstallDialog(value:Boolean){
+        state = state.copy(showAnalyticsInstallDialog = value)
+    }
 }

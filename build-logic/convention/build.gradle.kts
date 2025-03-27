@@ -72,6 +72,13 @@ gradlePlugin{
             implementationClass = "com.skcodes.convention.JvmKtorConventionPlugin"
         }
 
+        register(
+            "androidDynamicFeature"
+        ){
+            id = "runntrak.android.dynamic.feature"
+            implementationClass = "com.skcodes.convention.AndroidDynamicFeatureConventionPlugin"
+        }
+
 
     }
 }
